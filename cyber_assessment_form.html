@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity Readiness Assessment - Sekuzar</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #1c1c1c;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ff6600;
+    }
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .logo img {
+      max-width: 150px;
+    }
+    h1 {
+      color: #ff6600;
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input[type="radio"], input[type="email"] {
+      margin-right: 10px;
+    }
+    button {
+      background: #ff6600;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 30px;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .red { border: 1px solid #ff0033; background-color: #330000; }
+    .amber { border: 1px solid #ffaa00; background-color: #332200; }
+    .green { border: 1px solid #00cc66; background-color: #002d1a; }
+    .cta {
+      margin-top: 20px;
+    }
+    .cta a {
+      display: inline-block;
+      background-color: #ff6600;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="SekuzarLogo.png" alt="Sekuzar Logo">
+    </div>
+    <h1>Cybersecurity Readiness Assessment</h1>
+    <form id="quizForm">
+      <div class="question">
+        <label for="email">Your email (optional):</label>
+        <input type="email" name="email" placeholder="you@example.com">
+      </div>
+
+      <div class="question">
+        <label>1. Do you enforce strong passwords (12+ characters) for all employees?</label>
+        <input type="radio" name="q1" value="2"> Yes
+        <input type="radio" name="q1" value="1"> Not sure
+        <input type="radio" name="q1" value="0"> No
+      </div>
+
+      <div class="question">
+        <label>2. Have your employees received any cybersecurity awareness training in the past 6 months?</label>
+        <input type="radio" name="q2" value="2"> Yes
+        <input type="radio" name="q2" value="1"> Not sure
+        <input type="radio" name="q2" value="0"> No
+      </div>
+
+      <div class="question">
+        <label>3. Have you run any phishing simulations in the last 12 months?</label>
+        <input type="radio" name="q3" value="2"> Yes
+        <input type="radio" name="q3" value="1"> Not sure
+        <input type="radio" name="q3" value="0"> No
+      </div>
+
+      <div class="question">
+        <label>4. Have you ever conducted a professional penetration test?</label>
+        <input type="radio" name="q4" value="2"> Yes
+        <input type="radio" name="q4" value="1"> Not sure
+        <input type="radio" name="q4" value="0"> No
+      </div>
+
+      <div class="question">
+        <label>5. Do you have a formal incident response plan?</label>
+        <input type="radio" name="q5" value="2"> Yes
+        <input type="radio" name="q5" value="1"> Not sure
+        <input type="radio" name="q5" value="0"> No
+      </div>
+
+      <button type="button" onclick="calculateScore()">Submit</button>
+    </form>
+
+    <div id="result" class="result" style="display:none;"></div>
+  </div>
+
+  <script>
+    function calculateScore() {
+      const form = document.forms['quizForm'];
+      let score = 0;
+      for (let i = 1; i <= 5; i++) {
+        const question = form[`q${i}`];
+        if (question.value) score += parseInt(question.value);
+      }
+
+      let message = '';
+      let colorClass = '';
+      let consultationCTA = '';
+
+      if (score <= 4) {
+        message = '🚨 <strong>High Risk</strong>: Your company may be vulnerable to cyber threats. Let’s talk — Sekuzar can help!';
+        colorClass = 'red';
+        consultationCTA = '<div class="cta"><a href="https://calendar.app.google/PbJAqhmKHLgwt7Qh7">Book a Free Consultation</a></div>';
+      } else if (score <= 7) {
+        message = '⚠️ <strong>Moderate Risk</strong>: You’re doing okay, but there’s room to improve. Sekuzar can help you level up your defenses.';
+        colorClass = 'amber';
+        consultationCTA = '<div class="cta"><a href="https://calendar.app.google/PbJAqhmKHLgwt7Qh7">Book a Free Consultation</a></div>';
+      } else {
+        message = '✅ <strong>Low Risk</strong>: Great job! You’re on the right track, but regular reviews and simulations are key. Reach out for advanced insights!';
+        colorClass = 'green';
+      }
+
+      const resultBox = document.getElementById('result');
+      resultBox.className = `result ${colorClass}`;
+      resultBox.style.display = 'block';
+      resultBox.innerHTML = `<strong>Your Score: ${score}/10</strong><br><br>${message}${consultationCTA}`;
+    }
+  </script>
+</body>
+</html>
